@@ -1,3 +1,4 @@
+import subprocess
 # pip install wmi
 import wmi
 import winreg
@@ -20,16 +21,28 @@ def set_proxy(proxy_address, proxy_port):
         print("Đã xảy ra lỗi:", e)
 
 
+wifi_output = subprocess.check_output(['netsh', 'WLAN', 'show', 'interfaces'])
+data_infor = wifi_output.decode('utf-8')
+
+name_vvn20206205 = "vvn20206205"
+
+if name_vvn20206205 in data_infor:
+    print(f"🚀 Có kết nối {name_vvn20206205}")
+else:
+    print(f"🚀 Không kết nối {name_vvn20206205}")
+    # Tắt proxy       hướng dẫn              python
+    exit()
+
+
 wmi_obj = wmi.WMI()
-wmi_sql = "select IPAddress,DefaultIPGateway from Win32_NetworkAdapterConfiguration where IPEnabled=TRUE"
+wmi_sql = "select IPAddress, DefaultIPGateway from Win32_NetworkAdapterConfiguration where IPEnabled=TRUE"
 wmi_out = wmi_obj.query(wmi_sql)
 
-
 for dev in wmi_out:
-    print("IPv4Address:", dev.IPAddress[0],
-          "DefaultIPGateway:", dev.DefaultIPGateway[0])
+    proxy_address = dev.DefaultIPGateway[0]
 
-proxy_address = dev.DefaultIPGateway[0]
 proxy_port = "10809"
 
-set_proxy(proxy_address,  proxy_port)
+print(f"🚀 {proxy_address}")
+print(f"🚀 {proxy_port}")
+set_proxy(proxy_address, proxy_port)
