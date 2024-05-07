@@ -54,7 +54,12 @@ wmi_sql = "select IPAddress, DefaultIPGateway from Win32_NetworkAdapterConfigura
 wmi_out = wmi_obj.query(wmi_sql)
 
 for dev in wmi_out:
-    proxy_address = dev.DefaultIPGateway[0]
+    try:
+        # print(f"🚀 {dev}")
+        proxy_address = dev.DefaultIPGateway[0]
+        break
+    except:
+        pass
 
 proxy_port = "10809"
 
