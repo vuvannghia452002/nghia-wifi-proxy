@@ -4,6 +4,33 @@ import wmi
 import winreg
 
 
+
+
+def set_proxy_git(proxy_address, proxy_port):
+    """
+    Sets the HTTP proxy for Git.
+
+    :param proxy_address: The proxy server address.
+    :param proxy_port: The proxy server port.
+    """
+    proxy_url = f"http://{proxy_address}:{proxy_port}"
+    try:
+        subprocess.run(["git", "config", "--global", "http.proxy", proxy_url], check=True)
+        print(f"Proxy set to {proxy_url}")
+    except subprocess.CalledProcessError as e:
+        print(f"Failed to set proxy: {e}")
+
+def disable_proxy_git():
+    """
+    Unsets the HTTP proxy for Git.
+    """
+    try:
+        subprocess.run(["git", "config", "--global", "--unset", "http.proxy"], check=True)
+        print("Proxy has been disabled.")
+    except subprocess.CalledProcessError as e:
+        print(f"Failed to disable proxy: {e}")
+
+
 def set_proxy(proxy_address, proxy_port):
     try:
         reg = winreg.ConnectRegistry(None, winreg.HKEY_CURRENT_USER)
@@ -46,6 +73,7 @@ if name_vvn20206205 in data_infor:
 else:
     print(f"🚀 Không kết nối {name_vvn20206205}")
     disable_proxy()
+    disable_proxy_git()
     exit()
 
 
@@ -66,3 +94,4 @@ proxy_port = "10809"
 print(f"🚀 {proxy_address}")
 print(f"🚀 {proxy_port}")
 set_proxy(proxy_address, proxy_port)
+set_proxy_git(proxy_address, proxy_port)
