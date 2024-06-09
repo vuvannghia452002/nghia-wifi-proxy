@@ -3,7 +3,7 @@ import subprocess
 import wmi
 import winreg
 
-
+import time
 
 
 def set_proxy_git(proxy_address, proxy_port):
@@ -95,3 +95,4 @@ print(f"🚀 {proxy_address}")
 print(f"🚀 {proxy_port}")
 set_proxy(proxy_address, proxy_port)
 set_proxy_git(proxy_address, proxy_port)
+time.sleep(5)
