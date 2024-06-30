@@ -7,12 +7,6 @@ import time
 
 
 def set_proxy_git(proxy_address, proxy_port):
-    """
-    Sets the HTTP proxy for Git.
-
-    :param proxy_address: The proxy server address.
-    :param proxy_port: The proxy server port.
-    """
     proxy_url = f"http://{proxy_address}:{proxy_port}"
     try:
         subprocess.run(["git", "config", "--global", "http.proxy", proxy_url], check=True)
@@ -21,9 +15,6 @@ def set_proxy_git(proxy_address, proxy_port):
         print(f"Failed to set proxy: {e}")
 
 def disable_proxy_git():
-    """
-    Unsets the HTTP proxy for Git.
-    """
     try:
         subprocess.run(["git", "config", "--global", "--unset", "http.proxy"], check=True)
         print("Proxy has been disabled.")
@@ -95,4 +86,4 @@ print(f"🚀 {proxy_address}")
 print(f"🚀 {proxy_port}")
 set_proxy(proxy_address, proxy_port)
 set_proxy_git(proxy_address, proxy_port)
-time.sleep(5)
+time.sleep(1)
